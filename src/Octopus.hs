@@ -1,6 +1,6 @@
 {-# LANGUAGE FlexibleContexts, FunctionalDependencies, MultiParamTypeClasses, FlexibleInstances, ScopedTypeVariables #-}
 
-module OctopusIntention ((<>),(%),
+module Octopus ((<>),(%),
                         Move(),
                         module Color,
                         V4(V4),

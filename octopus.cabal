@@ -24,7 +24,7 @@ library
                      , UtilJuicy
                      , InverseSemigroup
                      , PMVector
-                     , OctopusIntention            
+                     , Octopus
                      , Affine3D
                      , DrawingExamples
                      , TemporalOctopus
