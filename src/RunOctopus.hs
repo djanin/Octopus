@@ -49,7 +49,7 @@ import qualified UtilJuicy as T
 
 import PMVector as PMV
 import qualified Data.Vector.Storable.Mutable as VS
-import OctopusIntention
+import Octopus
 import qualified TemporalOctopus as TO
 import qualified Affine3D
 import Affine3D (A3D(..))

@@ -1,6 +1,6 @@
 module Examples where
 
-import OctopusIntention
+import Octopus
 import TemporalOctopus
 import DrawingExamples
 

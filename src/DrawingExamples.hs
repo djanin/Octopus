@@ -1,6 +1,6 @@
 module DrawingExamples where
 
-import OctopusIntention
+import Octopus
 
 
 -- ** Examples of open surfaces

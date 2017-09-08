@@ -1,5 +1,5 @@
 module TemporalOctopus where
-import qualified OctopusIntention as OI
+import qualified Octopus as OI
 
 import InverseSemigroup
 import Data.Semigroup as S
@@ -60,7 +60,6 @@ play :: Ord a => a -> a -> TemporalOctopus a -> TemporalOctopus a
 play t1 t2 (TemporalOctopus a b) = TemporalOctopus a (\x -> if x >= t1 && x < t2
                                                       then b x
                                                       else mempty)
-
 incremental_display
   :: (Ord d, Num d) =>
      Integer -> d -> (Integer -> TemporalOctopus d) -> TemporalOctopus d
