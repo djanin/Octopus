@@ -50,14 +50,15 @@ import qualified UtilJuicy as T
 import PMVector as PMV
 import qualified Data.Vector.Storable.Mutable as VS
 import OctopusIntention
+import qualified TemporalOctopus as TO
 import qualified Affine3D
 import Affine3D (A3D(..))
 import Data.IORef
 import  GHC.Float
     
                                         
-runOctopus :: (Float -> Move Float) -> IO ()
-runOctopus s = do
+runOctopus :: TO.TemporalOctopus Float -> IO ()
+runOctopus (TO.TemporalOctopus _ s) = do
   -- TODO : the next two lines must not be inverted (seg. fault otherwise) but no explicit dependency prevents it.
   -- This is BAAAAD !
   env <- reacquire 0 initEnvironment

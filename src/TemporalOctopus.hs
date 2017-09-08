@@ -26,47 +26,44 @@ instance (Num d,Fractional d) => InverseSemigroup (AffineTemporalFun d) where
   inverse (AffineTemporalFun l a) = AffineTemporalFun (1/l) (-a/l)
 
 
-data TemporalMove d = TemporalMove (AffineTemporalFun d) (d -> OI.Move d)
+data TemporalOctopus d = TemporalOctopus (AffineTemporalFun d) (d -> OI.Move d)
 
-instance Num d => Semigroup (TemporalMove d) where
-  (TemporalMove a b) <> (TemporalMove a' b') =
-    TemporalMove (a <> a')  (\x -> b x
+instance Num d => Semigroup (TemporalOctopus d) where
+  (TemporalOctopus a b) <> (TemporalOctopus a' b') =
+    TemporalOctopus (a <> a')  (\x -> b x
                                           <>
                                           b' (applyAffineTemporalFun a x))
-instance Num d => Monoid (TemporalMove d) where
+instance Num d => Monoid (TemporalOctopus d) where
   mappend = (<>)
-  mempty = TemporalMove mempty (const mempty)
+  mempty = TemporalOctopus mempty (const mempty)
 
-instance Num d=>  ResetableSemigroup (TemporalMove d) where
-  reset (TemporalMove _ f) = TemporalMove mempty f
+instance Num d=>  ResetableSemigroup (TemporalOctopus d) where
+  reset (TemporalOctopus _ f) = TemporalOctopus mempty f
 
-instance (Num d,Fractional d) => InverseSemigroup (TemporalMove d) where
-  inverse (TemporalMove t f) =
-    TemporalMove (inverse t) (inverse . f . (applyAffineTemporalFun (inverse t)))
+makeTemporalOctopus
+  :: Num d => (d -> OI.Move d) -> TemporalOctopus d
+makeTemporalOctopus s = TemporalOctopus mempty s
 
-instance  InverseSemigroup (OI.Move d) where
-  inverse = undefined
+delay :: Num d => d -> TemporalOctopus d
+delay d = TemporalOctopus (AffineTemporalFun 1 d) mempty
 
-delay :: Num d => d -> TemporalMove d
-delay d = TemporalMove (AffineTemporalFun 1 d) mempty
+stretch :: Num d => d -> TemporalOctopus d
+stretch d = TemporalOctopus (AffineTemporalFun d 0) mempty
 
-stretch :: Num d => d -> TemporalMove d
-stretch d = TemporalMove (AffineTemporalFun d 0) mempty
+start :: (Ord a, Num a) => TemporalOctopus a -> TemporalOctopus a
+start (TemporalOctopus a b) = TemporalOctopus a (\x -> if x >= 0 then b x else mempty) 
 
-start :: (Ord a, Num a) => TemporalMove a -> TemporalMove a
-start (TemporalMove a b) = TemporalMove a (\x -> if x >= 0 then b x else mempty) 
+stop :: (Ord a, Num a) => TemporalOctopus a -> TemporalOctopus a
+stop (TemporalOctopus a b) =  TemporalOctopus a (\x -> if x < 0 then b x else mempty)
 
-stop :: (Ord a, Num a) => TemporalMove a -> TemporalMove a
-stop (TemporalMove a b) =  TemporalMove a (\x -> if x < 0 then b x else mempty)
-
-play :: Ord a => a -> a -> TemporalMove a -> TemporalMove a
-play t1 t2 (TemporalMove a b) = TemporalMove a (\x -> if x >= t1 && x < t2
+play :: Ord a => a -> a -> TemporalOctopus a -> TemporalOctopus a
+play t1 t2 (TemporalOctopus a b) = TemporalOctopus a (\x -> if x >= t1 && x < t2
                                                       then b x
                                                       else mempty)
 
 incremental_display
   :: (Ord d, Num d) =>
-     Integer -> d -> (Integer -> TemporalMove d) -> TemporalMove d
+     Integer -> d -> (Integer -> TemporalOctopus d) -> TemporalOctopus d
 incremental_display size d generate_move =
   foldMap (\i -> delay (fromInteger i * d)
               <> start (generate_move i)) [0..size]

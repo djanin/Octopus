@@ -1,12 +1,13 @@
 module Examples where
 
 import OctopusIntention
+import TemporalOctopus
 import DrawingExamples
 
 -- | Running test                           
                      
-testScene :: (Floating d, RealFrac d, Storable d) => d -> Move d
-testScene t = scale 3 <> shift (0,0,-9) <>
+testScene :: TemporalOctopus Float
+testScene = makeTemporalOctopus $ \t -> scale 3 <> shift (0,0,-9) <>
 
   
            -- shift (0,-20*(-0.5+cos(t/6)),-40*(0.5+sin(t/5))) <>
