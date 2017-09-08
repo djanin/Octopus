@@ -1,0 +1,86 @@
+name:                octopus
+version:             0.1.0.0
+synopsis:            A High-Level Fast 3D Animation Language
+-- description:         Please see README.md
+homepage:            http://poset.labri.fr/octopus/
+license:             BSD3
+license-file:        LICENSE
+stability:           Experimental 
+author:              S. Archipoff & D. Janin
+maintainer:          simon.archipoff@labri.fr, david.janin@labri.fr
+copyright:           2017 S. Archipoff & D. Janin
+category:            Graphics
+build-type:          Simple
+cabal-version:       >=1.10
+
+library
+  hs-source-dirs:      src, src/Shaders
+  exposed-modules:
+                      MatrixOpt
+                     , LoadShader
+                     , Color
+                     , RunOctopus
+                     , UtilGLFW
+                     , UtilJuicy
+                     , InverseSemigroup
+                     , PMVector
+                     , OctopusIntention            
+                     , Affine3D
+                     , DrawingExamples
+                     , TemporalOctopus
+  ghc-options:         -Wall
+  build-depends:       OpenGL
+                     , OpenGLRaw
+                     , array
+                     , base >= 4.7 && < 5
+                     , binary
+                     , bmp
+                     , bytestring
+                     , containers
+                     , deepseq
+                     , linear
+                     , spatial-math
+                     , split
+                     , time
+                     , transformers
+                     , vector
+                     , vector-binary-instances
+                     , JuicyPixels
+                     , GLUtil
+                     , GLFW-b
+                     , stm
+                     , mtl
+                     , pretty
+                     , halive
+  default-language:    Haskell2010
+
+
+executable octopus
+   hs-source-dirs:      app/
+  if os(linux) {
+    ghc-options:      -threaded -rtsopts -with-rtsopts=-N -O3 -Wall -dynamic
+               }
+  else {
+   ghc-options:
+               -threaded -rtsopts -with-rtsopts=-N -O3 -Wall -dynamic
+       }
+
+   main-is:             Main.hs
+   build-depends:       base
+--                      , file-embed
+                      , vector
+                      , halive
+                      , GLUtil
+                      , GLFW-b
+                      , JuicyPixels
+                      , OpenGL
+                      , OpenGLRaw
+                      , octopus
+                      , linear
+                      , mtl
+                      , stm
+                      , pretty
+                      , transformers
+                      
+   default-language:    Haskell2010
+   
