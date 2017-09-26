@@ -70,7 +70,6 @@ executable octopus
 --                      , file-embed
                       , vector
                       , halive
-                      , GLUtil
                       , GLFW-b
                       , JuicyPixels
                       , OpenGL

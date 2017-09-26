@@ -8,10 +8,7 @@ import System.Exit (exitWith, ExitCode(..))
     
 import Codec.Picture
 
-import Graphics.GLUtil    
-
 import Data.Vector.Storable ((!),unsafeWith)
-    
 
 load2DTexture :: FilePath -> IO TextureObject
 load2DTexture filename = do
@@ -42,7 +39,7 @@ loadImage2DData fileName faceType =
             case d of
               (ImageRGB8 (Image width height dat)) ->
                   do
-                    withPixels dat $ sTexImage2D width height faceType
+                    unsafeWith dat $ sTexImage2D width height faceType
                                    GL.UnsignedByte
               _ ->
                   do
