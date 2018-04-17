@@ -14,7 +14,6 @@ import Control.Monad (unless, when)
 import Control.Monad.RWS.Strict  (RWST, ask, asks, runRWST, get, liftIO, modify, put)
 
 
-import Halive.Utils
 
 -- Import all OpenGL libraries qualified, for pedagogical reasons
 import qualified Graphics.Rendering.OpenGL as GL
@@ -55,7 +54,11 @@ import qualified Affine3D
 import Affine3D (A3D(..))
 import Data.IORef
 import  GHC.Float
-    
+
+-- disabled  Halive thing
+-- import Halive.Utils (reacquire)
+reacquire _ a = a
+        
                                         
 runOctopus :: TO.TemporalOctopus Float -> IO ()
 runOctopus (TO.TemporalOctopus _ s) = do

@@ -51,7 +51,7 @@ library
                      , stm
                      , mtl
                      , pretty
-                     , halive
+--                     , halive
   default-language:    Haskell2010
 
 
@@ -69,7 +69,7 @@ executable octopus
    build-depends:       base
 --                      , file-embed
                       , vector
-                      , halive
+--                      , halive
                       , GLFW-b
                       , JuicyPixels
                       , OpenGL
